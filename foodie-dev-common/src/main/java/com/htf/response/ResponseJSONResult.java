@@ -19,9 +19,9 @@ public class ResponseJSONResult {
 
     //设置数据和状态
     public static ResponseJSONResult create(Object data, String status){
-        ResponseJSONResult commonReturnType = new ResponseJSONResult();
-        commonReturnType.setData(data);
-        commonReturnType.setStatus(status);
-        return commonReturnType;
+        ResponseJSONResult ResponseJSONResult = new ResponseJSONResult();
+        ResponseJSONResult.setData(data);
+        ResponseJSONResult.setStatus(status);
+        return ResponseJSONResult;
     }
 }
