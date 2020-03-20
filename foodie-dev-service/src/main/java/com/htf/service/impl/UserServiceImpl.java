@@ -29,6 +29,24 @@ public class UserServiceImpl implements UserService {
     private static final String USER_IMG_URL = "https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_trade.jpg";
 
     /**
+     * 判断用户名存不存在
+     * @param username
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public boolean queryUsernameIsExist(String username) {
+
+        Example userExample = new Example(Users.class);
+        Example.Criteria userCriteria = userExample.createCriteria();
+        userCriteria.andEqualTo("username",username);
+
+        Users result = usersMapper.selectOneByExample(userExample);
+
+        return result == null ? false : true;
+    }
+
+    /**
      * 创建users对象
      * @param usersVO
      * @return
@@ -63,21 +81,26 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 判断用户名存不存在
+     * 检索用户名和密码是否匹配，用于登录
      * @param username
+     * @param password
      * @return
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public boolean queryUsernameIsExist(String username) {
+    public Users queryUsersForLogin(String username, String password) {
 
         Example userExample = new Example(Users.class);
         Example.Criteria userCriteria = userExample.createCriteria();
         userCriteria.andEqualTo("username",username);
+        try {
+            userCriteria.andEqualTo("password",MD5Utils.getMD5Str(password));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Users result = usersMapper.selectOneByExample(userExample);
-
-        return result == null ? false : true;
+        Users users = usersMapper.selectOneByExample(userExample);
+        return users;
     }
 
     /**

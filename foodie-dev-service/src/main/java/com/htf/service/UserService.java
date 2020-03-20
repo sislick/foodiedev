@@ -1,5 +1,6 @@
 package com.htf.service;
 
+import com.htf.pojo.Users;
 import com.htf.vo.UsersVO;
 
 public interface UserService {
@@ -15,4 +16,12 @@ public interface UserService {
      * @return
      */
     public UsersVO createUsers(UsersVO usersVO);
+
+    /**
+     * 检索用户名和密码是否匹配，用于登录
+     * @param username
+     * @param password
+     * @return
+     */
+    public Users queryUsersForLogin(String username, String password);
 }

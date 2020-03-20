@@ -29,6 +29,6 @@ public class UsersVO {
      * 确认密码
      */
     @NotBlank(message = "确认密码不能为空")
-    @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "123123",required = true)
+    @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "123123",required = false)
     private String confirmPassword;
 }

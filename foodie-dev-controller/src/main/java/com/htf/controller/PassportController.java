@@ -3,6 +3,7 @@ package com.htf.controller;
 import com.htf.base.BaseController;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
+import com.htf.pojo.Users;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.UserService;
 import com.htf.vo.UsersVO;
@@ -26,6 +27,27 @@ public class PassportController extends BaseController {
 
     @Autowired
     private ValidatorImpl validator;
+
+    /**
+     * 判断用户名是否存在
+     * @param username
+     * @return
+     * @throws BusinessException
+     */
+    @ApiOperation(value = "用户名是否存在", notes = "判断用户名是否存在的API", httpMethod = "GET")
+    @GetMapping("/usernameIsExist")
+    public ResponseJSONResult usernameIsExist(@RequestParam String username) throws BusinessException{
+        //1.判断用户名不能为空
+        if(StringUtils.isBlank(username)){
+            throw new BusinessException(EmBusinessError.USER_NULL);
+        }
+        //2.查找注册的用户名是否存在
+        if(userService.queryUsernameIsExist(username)){
+            throw new BusinessException(EmBusinessError.USER_ALREADY_REGISTER);
+        }
+        //3.请求成功，用户名没有重复
+        return ResponseJSONResult.create(null);
+    }
 
     /**
      * 注册用户
@@ -59,25 +81,26 @@ public class PassportController extends BaseController {
         return ResponseJSONResult.create(usersResult);
     }
 
-    /**
-     * 判断用户名是否存在
-     * @param username
-     * @return
-     * @throws BusinessException
-     */
-    @ApiOperation(value = "用户名是否存在", notes = "判断用户名是否存在的API", httpMethod = "GET")
-    @GetMapping("/usernameIsExist")
-    public ResponseJSONResult usernameIsExist(@RequestParam String username) throws BusinessException{
-        //1.判断用户名不能为空
-        if(StringUtils.isBlank(username)){
-            throw new BusinessException(EmBusinessError.USER_NULL);
+    @ApiOperation(value = "用户登录", notes = "用户登录API", httpMethod = "POST")
+    @PostMapping("/login")
+    public ResponseJSONResult login(@RequestBody UsersVO usersVO) throws BusinessException{
+        //1.校验参数非空
+        if(usersVO == null){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
-        //2.查找注册的用户名是否存在
-        if(userService.queryUsernameIsExist(username)){
-            throw new BusinessException(EmBusinessError.USER_ALREADY_REGISTER);
+        if(StringUtils.isBlank(usersVO.getUsername()) ||
+            StringUtils.isBlank(usersVO.getPassword())){
+            throw new BusinessException(EmBusinessError.USER_OR_PASSWORD_BLANK);
         }
-        //3.请求成功，用户名没有重复
-        return ResponseJSONResult.create(null);
+
+        //2.检索用户名和密码是否匹配
+        Users users = userService.queryUsersForLogin(usersVO.getUsername(), usersVO.getPassword());
+        if(users == null){
+            throw new BusinessException(EmBusinessError.USER_OR_PASSWORD_ERROR);
+        }
+
+        //3.返回响应结果给前端
+        return ResponseJSONResult.create(users);
     }
 
 }
