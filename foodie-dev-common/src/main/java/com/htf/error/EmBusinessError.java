@@ -9,7 +9,8 @@ public enum EmBusinessError implements CommonError {
     //2开头，用户相关的异常
     USER_NOT_EXIST(20001,"用户名不存在"),
     USER_ALREADY_REGISTER(20002,"用户名已经注册"),
-    USER_NULL(20003,"用户名为空")
+    USER_NULL(20003,"用户名为空"),
+    PASSWORD_NOT_SAME(20004,"两次输入的密码不一致")
     ;
 
     //错误编码
