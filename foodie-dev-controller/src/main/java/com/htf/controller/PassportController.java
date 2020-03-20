@@ -8,10 +8,15 @@ import com.htf.service.UserService;
 import com.htf.vo.UsersVO;
 import com.htf.volidator.ValidationResult;
 import com.htf.volidator.ValidatorImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//@ApiIgnore API文档不显示此controller
+@Api(value = "注册登录", tags = {"用于登录注册的相关接口"})
+@CrossOrigin(origins = {"*"}, allowCredentials = "true")
 @RestController
 @RequestMapping("passport")
 public class PassportController extends BaseController {
@@ -28,6 +33,7 @@ public class PassportController extends BaseController {
      * @return
      * @throws BusinessException
      */
+    @ApiOperation(value = "用户注册", notes = "用户注册API", httpMethod = "POST")
     @PostMapping("/regist")
     public ResponseJSONResult regist(@RequestBody UsersVO usersVO) throws BusinessException {
         //1.校验用户名，密码，确认密码不为空，校验密码长度不能小于6位
@@ -59,6 +65,7 @@ public class PassportController extends BaseController {
      * @return
      * @throws BusinessException
      */
+    @ApiOperation(value = "用户名是否存在", notes = "判断用户名是否存在的API", httpMethod = "GET")
     @GetMapping("/usernameIsExist")
     public ResponseJSONResult usernameIsExist(@RequestParam String username) throws BusinessException{
         //1.判断用户名不能为空
