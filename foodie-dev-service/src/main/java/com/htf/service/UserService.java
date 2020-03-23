@@ -15,7 +15,7 @@ public interface UserService {
      * @param usersVO
      * @return
      */
-    public UsersVO createUsers(UsersVO usersVO);
+    public Users createUsers(UsersVO usersVO);
 
     /**
      * 检索用户名和密码是否匹配，用于登录

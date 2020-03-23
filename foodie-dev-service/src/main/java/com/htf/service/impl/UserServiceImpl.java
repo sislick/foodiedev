@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public UsersVO createUsers(UsersVO usersVO) {
+    public Users createUsers(UsersVO usersVO) {
         String usersId = sid.nextShort();
         Users users = new Users();
 
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         users.setUpdatedTime(new Date());
 
         usersMapper.insert(users);
-        return convertVOFromPojo(users);
+        return users;
     }
 
     /**

@@ -1,11 +1,14 @@
 package com.htf.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.htf.base.BaseController;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
 import com.htf.pojo.Users;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.UserService;
+import com.htf.utils.CookieUtils;
+import com.htf.utils.JsonUtils;
 import com.htf.vo.UsersVO;
 import com.htf.volidator.ValidationResult;
 import com.htf.volidator.ValidatorImpl;
@@ -14,6 +17,9 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 //@ApiIgnore API文档不显示此controller
 @Api(value = "注册登录", tags = {"用于登录注册的相关接口"})
@@ -57,7 +63,9 @@ public class PassportController extends BaseController {
      */
     @ApiOperation(value = "用户注册", notes = "用户注册API", httpMethod = "POST")
     @PostMapping("/regist")
-    public ResponseJSONResult regist(@RequestBody UsersVO usersVO) throws BusinessException {
+    public ResponseJSONResult regist(@RequestBody UsersVO usersVO,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) throws BusinessException {
         //1.校验用户名，密码，确认密码不为空，校验密码长度不能小于6位
         ValidationResult validationResult = this.validator.validator(usersVO);
         if(validationResult.isHasErrors()){
@@ -75,15 +83,24 @@ public class PassportController extends BaseController {
         }
 
         //4.注册用户
-        UsersVO usersResult = userService.createUsers(usersVO);
+        Users usersResult = userService.createUsers(usersVO);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersResult),true);
 
         //5.返回响应结果给前端
         return ResponseJSONResult.create(usersResult);
     }
 
+    /**
+     * 用户登录
+     * @param usersVO
+     * @return
+     * @throws BusinessException
+     */
     @ApiOperation(value = "用户登录", notes = "用户登录API", httpMethod = "POST")
     @PostMapping("/login")
-    public ResponseJSONResult login(@RequestBody UsersVO usersVO) throws BusinessException{
+    public ResponseJSONResult login(@RequestBody UsersVO usersVO,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response) throws BusinessException{
         //1.校验参数非空
         if(usersVO == null){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
@@ -99,8 +116,29 @@ public class PassportController extends BaseController {
             throw new BusinessException(EmBusinessError.USER_OR_PASSWORD_ERROR);
         }
 
-        //3.返回响应结果给前端
+        //3.将用户信息保存在cookie中
+        users = setPropertyNull(users);
+        CookieUtils.setCookie(request,response,"user",
+                JSON.toJSONString(users),true);
+
+        //4.返回响应结果给前端
         return ResponseJSONResult.create(users);
     }
 
+    /**
+     * 将前端不需要的属性设置为空
+     * @param users
+     * @return
+     */
+    private Users setPropertyNull(Users users){
+        users.setRealname(null);
+        users.setPassword(null);
+        users.setMobile(null);
+        users.setEmail(null);
+        users.setCreatedTime(null);
+        users.setUpdatedTime(null);
+        users.setBirthday(null);
+
+        return users;
+    }
 }
