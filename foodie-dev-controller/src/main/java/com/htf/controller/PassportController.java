@@ -1,6 +1,5 @@
 package com.htf.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.htf.base.BaseController;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
@@ -84,7 +83,7 @@ public class PassportController extends BaseController {
 
         //4.注册用户
         Users usersResult = userService.createUsers(usersVO);
-        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersResult),true);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersResult));
 
         //5.返回响应结果给前端
         return ResponseJSONResult.create(usersResult);
@@ -118,8 +117,7 @@ public class PassportController extends BaseController {
 
         //3.将用户信息保存在cookie中
         users = setPropertyNull(users);
-        CookieUtils.setCookie(request,response,"user",
-                JSON.toJSONString(users),true);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(users),true);
 
         //4.返回响应结果给前端
         return ResponseJSONResult.create(users);
