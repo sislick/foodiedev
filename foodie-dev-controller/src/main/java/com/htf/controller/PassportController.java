@@ -127,6 +127,20 @@ public class PassportController extends BaseController {
         return ResponseJSONResult.create(users);
     }
 
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
+    @PostMapping("/logout")
+    public ResponseJSONResult logout(@RequestParam String userId,
+                                        HttpServletRequest request,
+                                        HttpServletResponse response){
+        //清除用户相关信息的cookie
+        CookieUtils.deleteCookie(request,response,"user");
+
+        //TODO 用户退出登录，需要清空购物车
+        //TODO 分布式会话中需要清除用户数据
+
+        return ResponseJSONResult.create(null);
+    }
+
     /**
      * 将前端不需要的属性设置为空
      * @param users
