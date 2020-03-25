@@ -1,12 +1,15 @@
 package com.htf.controller;
 
 import com.htf.enums.IsShow;
+import com.htf.error.BusinessException;
+import com.htf.error.EmBusinessError;
 import com.htf.pojo.Carousel;
 import com.htf.pojo.Category;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.CarouseService;
 import com.htf.service.CategoryService;
 import com.htf.vo.CategoryVO;
+import com.htf.vo.NewItemsVO;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,11 +56,30 @@ public class IndexController {
     @ApiOperation(value = "获取商品子分类", notes = "获取商品子分类", httpMethod = "GET")
     @GetMapping("/subCat/{rootCatId}")
     public ResponseJSONResult subCat(
-            @ApiParam(name = "rootCatId", value = "一级分类id")
-            @PathVariable Integer rootCatId){
+            @ApiParam(name = "rootCatId", value = "一级分类id", required = true)
+            @PathVariable Integer rootCatId) throws BusinessException{
+        if(rootCatId == null){
+            throw new BusinessException(EmBusinessError.ITEM_NOT_EXIST);
+        }
 
         List<CategoryVO> subCatList = categoryService.getSubCatList(rootCatId);
 
         return ResponseJSONResult.create(subCatList);
+    }
+
+    @ApiOperation(value = "查询每个一级分类下的最新6条商品数据", notes = "查询每个一级分类下的最新6条商品数据", httpMethod = "GET")
+    @GetMapping("/sixNewItems/{rootCatId}")
+    public ResponseJSONResult sixNewItems(
+            @ApiParam(name = "rootCatId", value = "一级分类id", required = true)
+            @PathVariable Integer rootCatId) throws BusinessException{
+
+        if(rootCatId == null){
+            throw new BusinessException(EmBusinessError.ITEM_NOT_EXIST);
+        }
+
+        List<NewItemsVO> newItemLazy = categoryService.getSixNewItemLazy(rootCatId);
+
+        return ResponseJSONResult.create(newItemLazy);
+
     }
 }

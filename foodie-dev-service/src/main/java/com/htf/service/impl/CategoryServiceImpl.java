@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -38,5 +40,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryVO> getSubCatList(Integer rootCatId) {
         return categoryCustomMapper.getSubCatList(rootCatId);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List getSixNewItemLazy(Integer rootCatId) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("rootCatId", rootCatId);
+
+        return categoryCustomMapper.getSixNewItemLazy(map);
     }
 }
