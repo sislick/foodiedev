@@ -6,13 +6,13 @@ import com.htf.pojo.Category;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.CarouseService;
 import com.htf.service.CategoryService;
+import com.htf.vo.CategoryVO;
+import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +48,16 @@ public class IndexController {
         List<Category> categoryList = categoryService.queryAllRootLevelCat();
 
         return ResponseJSONResult.create(categoryList);
+    }
+
+    @ApiOperation(value = "获取商品子分类", notes = "获取商品子分类", httpMethod = "GET")
+    @GetMapping("/subCat/{rootCatId}")
+    public ResponseJSONResult subCat(
+            @ApiParam(name = "rootCatId", value = "一级分类id")
+            @PathVariable Integer rootCatId){
+
+        List<CategoryVO> subCatList = categoryService.getSubCatList(rootCatId);
+
+        return ResponseJSONResult.create(subCatList);
     }
 }
