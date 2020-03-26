@@ -6,6 +6,7 @@ import com.htf.enums.EmCommentLevel;
 import com.htf.mapper.*;
 import com.htf.pojo.*;
 import com.htf.service.ItemService;
+import com.htf.utils.DesensitizationUtil;
 import com.htf.utils.PagedGridResult;
 import com.htf.vo.CommentLevelCountsVO;
 import com.htf.vo.ItemCommentVO;
@@ -112,6 +113,10 @@ public class ItemServiceImpl implements ItemService {
         PageHelper.startPage(page, pageSize);
 
         List<ItemCommentVO> list = itemsCustomMapper.queryItemComments(itemId, level);
+        for(ItemCommentVO vo : list){
+            //用户信息脱敏处理
+            vo.setNickname(DesensitizationUtil.commonDisplay(vo.getNickname()));
+        }
 
         return setPagedGrid(list, page);
     }
