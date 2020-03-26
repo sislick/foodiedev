@@ -10,6 +10,7 @@ import com.htf.utils.DesensitizationUtil;
 import com.htf.utils.PagedGridResult;
 import com.htf.vo.CommentLevelCountsVO;
 import com.htf.vo.ItemCommentVO;
+import com.htf.vo.SearchItemsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -130,5 +131,16 @@ public class ItemServiceImpl implements ItemService {
         grid.setRecords(pageList.getTotal());
 
         return grid;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> list = itemsCustomMapper.searchItems(keywords, sort);
+
+        return setPagedGrid(list, page);
     }
 }
