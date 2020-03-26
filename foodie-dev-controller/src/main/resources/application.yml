@@ -31,6 +31,7 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
 ############################################################
 #
 # mybatis mapper 配置
@@ -41,6 +42,12 @@ mapper:
   mappers: com.htf.my.mapper.MyMapper
   not-empty: false
   identity: MYSQL
+
+# 分页插件配置
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
+
 
 ############################################################
 #

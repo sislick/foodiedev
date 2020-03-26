@@ -1,10 +1,14 @@
 package com.htf.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.htf.enums.EmCommentLevel;
 import com.htf.mapper.*;
 import com.htf.pojo.*;
 import com.htf.service.ItemService;
+import com.htf.utils.PagedGridResult;
 import com.htf.vo.CommentLevelCountsVO;
+import com.htf.vo.ItemCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,6 +30,8 @@ public class ItemServiceImpl implements ItemService {
     private ItemsParamMapper itemsParamMapper;
     @Autowired
     private ItemsCommentsMapper itemsCommentsMapper;
+    @Autowired
+    private ItemsCustomMapper itemsCustomMapper;
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -96,5 +102,28 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return itemsCommentsMapper.selectCount(itemsComments);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult queryPagedComments(String itemId, Integer level,
+                                                  Integer page, Integer pageSize) {
+
+        PageHelper.startPage(page, pageSize);
+
+        List<ItemCommentVO> list = itemsCustomMapper.queryItemComments(itemId, level);
+
+        return setPagedGrid(list, page);
+    }
+
+    private PagedGridResult setPagedGrid(List<?> list, Integer page){
+        PageInfo<?> pageList = new PageInfo<>(list);
+        PagedGridResult grid = new PagedGridResult();
+        grid.setPage(page);
+        grid.setRows(list);
+        grid.setTotal(pageList.getPages());
+        grid.setRecords(pageList.getTotal());
+
+        return grid;
     }
 }
