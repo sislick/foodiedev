@@ -6,6 +6,7 @@ import com.htf.pojo.ItemsParam;
 import com.htf.pojo.ItemsSpec;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.ItemService;
+import com.htf.vo.CommentLevelCountsVO;
 import com.htf.vo.ItemInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,17 @@ public class ItemController {
         itemInfoVO.setItemParams(itemsParam);
 
         return ResponseJSONResult.create(itemInfoVO);
+    }
+
+    @ApiOperation(value = "查询商品评价等级", notes = "查询商品评价等级", httpMethod = "GET")
+    @GetMapping("/commentLevel")
+    public ResponseJSONResult queryCommentCounts(
+            @ApiParam(name = "itemId", value = "商品id", required = true)
+            @RequestParam String itemId){
+
+        CommentLevelCountsVO countsVO = itemService.queryCommentCounts(itemId);
+
+        return ResponseJSONResult.create(countsVO);
     }
 
 }

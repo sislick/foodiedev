@@ -10,7 +10,6 @@ import com.htf.service.CarouseService;
 import com.htf.service.CategoryService;
 import com.htf.vo.CategoryVO;
 import com.htf.vo.NewItemsVO;
-import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -75,7 +74,7 @@ public class IndexController {
 
         if(rootCatId == null){
             throw new BusinessException(EmBusinessError.ITEM_NOT_EXIST);
-        }
+    }
 
         List<NewItemsVO> newItemLazy = categoryService.getSixNewItemLazy(rootCatId);
 

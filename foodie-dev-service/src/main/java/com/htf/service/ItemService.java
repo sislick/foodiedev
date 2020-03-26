@@ -4,6 +4,7 @@ import com.htf.pojo.Items;
 import com.htf.pojo.ItemsImg;
 import com.htf.pojo.ItemsParam;
 import com.htf.pojo.ItemsSpec;
+import com.htf.vo.CommentLevelCountsVO;
 
 import java.util.List;
 
@@ -36,4 +37,11 @@ public interface ItemService {
      * @return
      */
     ItemsParam queryItemParam(String itemId);
+
+    /**
+     * 根据商品id查询评价数量信息
+     * @param itemId
+     * @return
+     */
+    CommentLevelCountsVO queryCommentCounts(String itemId);
 }

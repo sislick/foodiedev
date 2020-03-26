@@ -7,7 +7,7 @@ public enum IsShow {
     public final Integer type;
     public final String value;
 
-    IsShow(Integer type,String value){
+    private IsShow(Integer type,String value){
         this.type = type;
         this.value = value;
     }
