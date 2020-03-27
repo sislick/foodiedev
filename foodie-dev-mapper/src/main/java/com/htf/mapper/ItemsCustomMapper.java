@@ -19,4 +19,7 @@ public interface ItemsCustomMapper {
 
     List<SearchItemsVO> searchItems(@Param("keywords") String keywords,
                                     @Param("sort") String sort);
+
+    List<SearchItemsVO> searchItemsByThirdCat(@Param("catId") Integer catId,
+                                    @Param("sort") String sort);
 }

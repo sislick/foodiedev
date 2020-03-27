@@ -143,4 +143,15 @@ public class ItemServiceImpl implements ItemService {
 
         return setPagedGrid(list, page);
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItemsByThirdCat(Integer catId, String sort, Integer page, Integer pageSize) {
+
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> list = itemsCustomMapper.searchItemsByThirdCat(catId, sort);
+
+        return setPagedGrid(list, page);
+    }
 }
