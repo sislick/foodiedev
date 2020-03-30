@@ -89,6 +89,9 @@ public class PassportController extends BaseController {
         Users usersResult = userService.createUsers(usersVO);
         CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersResult));
 
+        //TODO 生成用户token，存入redis会话
+        //TODO 同步购物车数据
+
         //5.返回响应结果给前端
         return ResponseJSONResult.create(usersResult);
     }
@@ -122,6 +125,9 @@ public class PassportController extends BaseController {
         //3.将用户信息保存在cookie中
         users = setPropertyNull(users);
         CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(users),true);
+
+        //TODO 生成用户token，存入redis会话
+        //TODO 同步购物车数据
 
         //4.返回响应结果给前端
         return ResponseJSONResult.create(users);

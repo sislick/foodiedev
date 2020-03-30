@@ -13,6 +13,7 @@ public enum EmBusinessError implements CommonError {
     PASSWORD_NOT_SAME(20004,"两次输入的密码不一致"),
     USER_OR_PASSWORD_ERROR(20005,"用户名或密码不正确"),
     USER_OR_PASSWORD_BLANK(20006,"用户名或密码不能为空"),
+    USER_NOT_LOGIN(20007,"用户名未登录"),
 
     //3开头，商品信息相关
     ITEM_NOT_EXIST(30001,"商品分类不存在")
