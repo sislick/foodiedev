@@ -24,7 +24,8 @@ public enum EmBusinessError implements CommonError {
     ADDRESS_USER_MOBILE_NOT_NULL(40003,"收货人手机号不能为空"),
     ADDRESS_USER_MOBILE_LENGTH(40004,"收货人手机号长度不正确"),
     ADDRESS_USER_MOBILE_FORMAT(40005,"收货人手机号格式不正确"),
-    ADDRESS_INFO_NOT_NULL(40006,"收货地址信息不能为空")
+    ADDRESS_INFO_NOT_NULL(40006,"收货地址信息不能为空"),
+    ADDRESS_UPDATE_ERROR(40007,"修改地址错误:addressId不能为空")
     ;
 
     //错误编码

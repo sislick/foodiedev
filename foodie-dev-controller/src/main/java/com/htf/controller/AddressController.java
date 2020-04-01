@@ -56,6 +56,23 @@ public class AddressController {
         return ResponseJSONResult.create(null);
     }
 
+    @PostMapping("/update")
+    @ApiOperation(value = "用户修改地址", notes = "用户修改地址", httpMethod = "POST")
+    public ResponseJSONResult update(
+            @ApiParam(name = "", value = "", required = true)
+            @RequestBody AddressVO addressVO) throws BusinessException{
+        if(StringUtils.isBlank(addressVO.getAddressId())){
+            throw new BusinessException(EmBusinessError.ADDRESS_UPDATE_ERROR);
+        }
+
+        ResponseJSONResult result = this.checkAddress(addressVO);
+        if(result.getStatus() == "success"){
+            addressService.updateUserAddress(addressVO);
+        }
+
+        return ResponseJSONResult.create(null);
+    }
+
     private ResponseJSONResult checkAddress(AddressVO addressVO) throws BusinessException{
         String receiver = addressVO.getReceiver();
         if (StringUtils.isBlank(receiver)) {

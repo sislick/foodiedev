@@ -19,4 +19,10 @@ public interface AddressService {
      * @param addressVO
      */
     void addNewUserAddress(AddressVO addressVO);
+
+    /**
+     * 用户修改地址
+     * @param addressVO
+     */
+    void updateUserAddress(AddressVO addressVO);
 }
