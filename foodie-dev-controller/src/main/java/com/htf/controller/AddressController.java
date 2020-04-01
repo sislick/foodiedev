@@ -89,6 +89,22 @@ public class AddressController {
         return ResponseJSONResult.create(null);
     }
 
+    @PostMapping("/setDefalut")
+    @ApiOperation(value = "用户设置默认地址", notes = "用户设置默认地址", httpMethod = "POST")
+    public ResponseJSONResult setDefalut(
+            @ApiParam(name = "userId", value = "用户ID", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "addressId", value = "地址ID", required = true)
+            @RequestParam String addressId) throws BusinessException{
+        if(StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)){
+            throw new BusinessException(EmBusinessError.ADDRESS_SETDEFAULT_ERROR);
+        }
+
+        addressService.updateUserAddressToBeDefault(userId, addressId);
+
+        return ResponseJSONResult.create(null);
+    }
+
     private ResponseJSONResult checkAddress(AddressVO addressVO) throws BusinessException{
         String receiver = addressVO.getReceiver();
         if (StringUtils.isBlank(receiver)) {
