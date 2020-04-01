@@ -4,6 +4,7 @@ import com.htf.my.mapper.MyMapper;
 import com.htf.pojo.Items;
 import com.htf.vo.ItemCommentVO;
 import com.htf.vo.SearchItemsVO;
+import com.htf.vo.ShopcartVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,6 @@ public interface ItemsCustomMapper {
 
     List<SearchItemsVO> searchItemsByThirdCat(@Param("catId") Integer catId,
                                     @Param("sort") String sort);
+
+    List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList") List specIdsList);
 }

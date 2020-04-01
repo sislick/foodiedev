@@ -107,4 +107,29 @@
         </choose>
     </select>
 
+    <select id="queryItemsBySpecIds" resultType="com.htf.vo.ShopcartVO">
+        select
+            t.id as itemId,
+            t.item_name as itemName,
+            t_ii.url as itemImgUrl,
+            t_isp.id as specId,
+            t_isp.`name` as specName,
+            t_isp.price_discount as priceDiscount,
+            t_isp.price_normal as priceNormal
+        from
+            items_spec t_isp
+        left join
+            items t
+        on t.id = t_isp.item_id
+        left join
+            items_img t_ii
+        on t.id = t_ii.item_id
+        where t_ii.is_main = 1
+        and t_isp.id in
+        <foreach collection="paramsList" index="index" item="specId" open="(" separator="," close=")">
+            #{specId}
+        </foreach>
+
+    </select>
+
 </mapper>

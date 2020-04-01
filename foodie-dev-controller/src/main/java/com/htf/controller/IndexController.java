@@ -1,5 +1,6 @@
 package com.htf.controller;
 
+import com.htf.base.BaseController;
 import com.htf.enums.IsShow;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("index")
 @Api(value = "首页", tags = {"首页展示的相关接口"})
 @CrossOrigin(origins = {"*"}, allowCredentials = "true")
-public class IndexController {
+public class IndexController extends BaseController {
 
     @Autowired
     private CarouseService carouseService;

@@ -1,5 +1,6 @@
 package com.htf.controller;
 
+import com.htf.base.BaseController;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
 import com.htf.pojo.Items;
@@ -11,6 +12,7 @@ import com.htf.service.ItemService;
 import com.htf.utils.PagedGridResult;
 import com.htf.vo.CommentLevelCountsVO;
 import com.htf.vo.ItemInfoVO;
+import com.htf.vo.ShopcartVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,7 +26,7 @@ import java.util.List;
 @RequestMapping("items")
 @Api(value = "商品接口", tags = "商品信息展示的相关接口")
 @CrossOrigin(origins = {"*"}, allowCredentials = "true")
-public class ItemController {
+public class ItemController extends BaseController {
 
     @Autowired
     private ItemService itemService;
@@ -128,5 +130,18 @@ public class ItemController {
 
         PagedGridResult pagedGridResult = itemService.searchItemsByThirdCat(catId, sort, page, pageSize);
         return ResponseJSONResult.create(pagedGridResult);
+    }
+
+    @ApiOperation(value = "根据商品规格ids查找最新的商品数据", tags = "根据商品规格ids查找最新的商品数据", httpMethod = "GET")
+    @GetMapping("/refresh")
+    public ResponseJSONResult refresh(
+            @ApiParam(name = "itemSpecIds", value = "拼接规格的ids", required = true, example = "1,3,5")
+            @RequestParam String itemSpecIds){
+        if(StringUtils.isBlank(itemSpecIds)){
+            return ResponseJSONResult.create(null);
+        }
+        List<ShopcartVO> shopcartVOList = itemService.queryItemsBySpecIds(itemSpecIds);
+
+        return ResponseJSONResult.create(shopcartVOList);
     }
 }
