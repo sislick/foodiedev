@@ -1,5 +1,6 @@
 package com.htf.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import lombok.Data;
  * 用于新增或修改地址
  */
 @Data
+@ApiModel(value = "用户地址VO对象", description = "用户地址VO对象，用于前后端交互的数据对象")
 public class AddressVO {
 
     @ApiModelProperty(value = "地址id")
