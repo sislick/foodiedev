@@ -59,7 +59,7 @@ public class AddressController {
     @PostMapping("/update")
     @ApiOperation(value = "用户修改地址", notes = "用户修改地址", httpMethod = "POST")
     public ResponseJSONResult update(
-            @ApiParam(name = "", value = "", required = true)
+            @ApiParam(name = "addressVO", value = "用户地址VO对象", required = true)
             @RequestBody AddressVO addressVO) throws BusinessException{
         if(StringUtils.isBlank(addressVO.getAddressId())){
             throw new BusinessException(EmBusinessError.ADDRESS_UPDATE_ERROR);
@@ -69,6 +69,22 @@ public class AddressController {
         if(result.getStatus() == "success"){
             addressService.updateUserAddress(addressVO);
         }
+
+        return ResponseJSONResult.create(null);
+    }
+
+    @PostMapping("/delete")
+    @ApiOperation(value = "用户删除地址", notes = "用户删除地址", httpMethod = "POST")
+    public ResponseJSONResult delete(
+            @ApiParam(name = "userId", value = "用户ID", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "addressId", value = "地址ID", required = true)
+            @RequestParam String addressId) throws BusinessException{
+        if(StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)){
+            throw new BusinessException(EmBusinessError.ADDRESS_DELETE_ERROR);
+        }
+
+        addressService.deleteUserAddress(userId, addressId);
 
         return ResponseJSONResult.create(null);
     }

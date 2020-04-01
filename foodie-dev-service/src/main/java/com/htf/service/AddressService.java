@@ -25,4 +25,11 @@ public interface AddressService {
      * @param addressVO
      */
     void updateUserAddress(AddressVO addressVO);
+
+    /**
+     * 用户删除地址
+     * @param userId
+     * @param addressId
+     */
+    void deleteUserAddress(String userId, String addressId);
 }
