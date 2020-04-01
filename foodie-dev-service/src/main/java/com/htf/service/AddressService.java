@@ -1,6 +1,7 @@
 package com.htf.service;
 
 import com.htf.pojo.UserAddress;
+import com.htf.vo.AddressVO;
 
 import java.util.List;
 
@@ -12,4 +13,10 @@ public interface AddressService {
      * @return
      */
     List<UserAddress> queryAll(String userId);
+
+    /**
+     * 用户新增地址
+     * @param addressVO
+     */
+    void addNewUserAddress(AddressVO addressVO);
 }

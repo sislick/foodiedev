@@ -16,7 +16,15 @@ public enum EmBusinessError implements CommonError {
     USER_NOT_LOGIN(20007,"用户名未登录"),
 
     //3开头，商品信息相关
-    ITEM_NOT_EXIST(30001,"商品分类不存在")
+    ITEM_NOT_EXIST(30001,"商品分类不存在"),
+
+    //4开头，地址信息相关
+    ADDRESS_USER_NOT_NULL(40001,"收货人不能为空"),
+    ADDRESS_USER_NAME_TOO_LONG(40002,"收货人姓名不能太长"),
+    ADDRESS_USER_MOBILE_NOT_NULL(40003,"收货人手机号不能为空"),
+    ADDRESS_USER_MOBILE_LENGTH(40004,"收货人手机号长度不正确"),
+    ADDRESS_USER_MOBILE_FORMAT(40005,"收货人手机号格式不正确"),
+    ADDRESS_INFO_NOT_NULL(40006,"收货地址信息不能为空")
     ;
 
     //错误编码
