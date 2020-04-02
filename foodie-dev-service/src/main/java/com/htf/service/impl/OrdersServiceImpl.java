@@ -42,7 +42,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public void createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException {
+    public String createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException {
         String userId = submitOrdersVO.getUserId();
         String addressId = submitOrdersVO.getAddressId();
         String itemSpecIds = submitOrdersVO.getItemSpecIds();
@@ -125,5 +125,7 @@ public class OrdersServiceImpl implements OrdersService {
         waitPayOrderStatus.setCreatedTime(new Date());
 
         orderStatusMapper.insert(waitPayOrderStatus);
+
+        return orderId;
     }
 }

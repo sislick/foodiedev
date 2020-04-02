@@ -11,5 +11,5 @@ public interface OrdersService {
      * 用于创建订单相关信息
      * @param submitOrdersVO
      */
-    void createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException;
+    String createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException;
 }
