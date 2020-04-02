@@ -3,7 +3,7 @@ package com.htf.vo;
 import lombok.Data;
 
 @Data
-public class OrdersVO {
+public class SubmitOrdersVO {
 
     private String userId;
     private String itemSpecIds;

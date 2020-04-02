@@ -3,6 +3,9 @@ package com.htf.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.htf.enums.EmCommentLevel;
+import com.htf.enums.YesOrNo;
+import com.htf.error.BusinessException;
+import com.htf.error.EmBusinessError;
 import com.htf.mapper.*;
 import com.htf.pojo.*;
 import com.htf.service.ItemService;
@@ -166,5 +169,49 @@ public class ItemServiceImpl implements ItemService {
         Collections.addAll(specIdsList,ids);
 
         return itemsCustomMapper.queryItemsBySpecIds(specIdsList);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public ItemsSpec queryItemSpecById(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg itemsImg = new ItemsImg();
+        itemsImg.setItemId(itemId);
+        itemsImg.setIsMain(YesOrNo.YES.type);
+        ItemsImg img = itemsImgMapper.selectOne(itemsImg);
+
+        return img != null ? img.getUrl() : "";
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void decreaseItemSpecStock(String specId, Integer buyCounts) throws BusinessException {
+
+        //synchronized 不推荐使用，集群下无用，性能低下
+        //锁数据库：不推荐，导致数据库性能低下
+        //分布式锁 zookeeper  redis
+
+        //LockUtil.getLock();加锁
+
+
+        //1.查询库存
+//        int stock = 10;
+        //2.判断库存，是否能够减少到0以下
+//        if(stock - buyCounts < 0){
+            //提示用户库存不够
+//        }
+
+
+        //LockUtil.unLock();解锁
+
+        int result = itemsCustomMapper.decreaseItemSpecStock(specId, buyCounts);
+        if(result != 1){
+            throw new BusinessException(EmBusinessError.ORDER_FAIL);
+        }
     }
 }

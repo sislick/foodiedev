@@ -27,7 +27,11 @@ public enum EmBusinessError implements CommonError {
     ADDRESS_INFO_NOT_NULL(40006,"收货地址信息不能为空"),
     ADDRESS_UPDATE_ERROR(40007,"修改地址错误:addressId不能为空"),
     ADDRESS_DELETE_ERROR(40008,"删除地址错误:参数格式不正确"),
-    ADDRESS_SETDEFAULT_ERROR(40009,"设置默认地址错误：参数格式不正确")
+    ADDRESS_SETDEFAULT_ERROR(40009,"设置默认地址错误：参数格式不正确"),
+
+    //5开头，订单相关
+    ORDER_PAY_NOT_SUPPERT(50001,"支付方式不支持"),
+    ORDER_FAIL(50002,"订单创建失败，原因：库存不足！")
     ;
 
     //错误编码
