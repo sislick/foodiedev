@@ -10,6 +10,8 @@ import com.htf.pojo.*;
 import com.htf.service.AddressService;
 import com.htf.service.ItemService;
 import com.htf.service.OrdersService;
+import com.htf.vo.MerchantOrdersVO;
+import com.htf.vo.OrderVO;
 import com.htf.vo.SubmitOrdersVO;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public String createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException {
+    public OrderVO createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException {
         String userId = submitOrdersVO.getUserId();
         String addressId = submitOrdersVO.getAddressId();
         String itemSpecIds = submitOrdersVO.getItemSpecIds();
@@ -126,7 +128,19 @@ public class OrdersServiceImpl implements OrdersService {
 
         orderStatusMapper.insert(waitPayOrderStatus);
 
-        return orderId;
+        //4.构建商户订单，用于传给支付中心
+        MerchantOrdersVO merchantOrdersVO = new MerchantOrdersVO();
+        merchantOrdersVO.setMerchantOrderId(orderId);
+        merchantOrdersVO.setMerchantUserId(userId);
+        merchantOrdersVO.setAmount(realPayAmount + postAmount);
+        merchantOrdersVO.setPayMethod(payMethod);
+
+        //5.构建自定义VO
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderId(orderId);
+        orderVO.setMerchantOrdersVO(merchantOrdersVO);
+
+        return orderVO;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
