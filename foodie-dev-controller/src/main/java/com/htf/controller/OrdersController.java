@@ -1,6 +1,7 @@
 package com.htf.controller;
 
 import com.htf.base.BaseController;
+import com.htf.enums.EmOrderStatus;
 import com.htf.enums.EmPayMethod;
 import com.htf.error.BusinessException;
 import com.htf.error.EmBusinessError;
@@ -10,6 +11,7 @@ import com.htf.utils.CookieUtils;
 import com.htf.vo.SubmitOrdersVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,5 +46,13 @@ public class OrdersController extends BaseController {
         //3.向支付中心发送当前订单，用于保存支付中心的订单数据
 
         return ResponseJSONResult.create(orderId);
+    }
+
+    @PostMapping("/notifyMerchantOrderPaid")
+    public Integer notifyMerchantOrderPaid(String merchanOrderId){
+
+        ordersService.updateOrderStatus(merchanOrderId, EmOrderStatus.WAIT_DELIVER.type);
+
+        return HttpStatus.OK.value();
     }
 }

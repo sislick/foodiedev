@@ -16,6 +16,10 @@ import java.util.Map;
  */
 public class BaseController {
 
+    //微信支付成功-》支付中心-》天天吃货平台
+    //                    -》回调通知的url
+    public static final String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
+
     //解决未被controller层吸收的exception
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)

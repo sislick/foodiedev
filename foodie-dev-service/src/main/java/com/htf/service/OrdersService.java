@@ -12,4 +12,11 @@ public interface OrdersService {
      * @param submitOrdersVO
      */
     String createOrder(SubmitOrdersVO submitOrdersVO) throws BusinessException;
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param orderStatus
+     */
+    void updateOrderStatus(String orderId, Integer orderStatus);
 }
