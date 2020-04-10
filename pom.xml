@@ -16,11 +16,11 @@
     </modules>
 
     <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.2.5.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.2.5.RELEASE</version>
+      <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
   <name>foodie-dev</name>
   <!-- FIXME change it to the project's website -->
