@@ -9,14 +9,18 @@ import com.htf.pojo.Category;
 import com.htf.response.ResponseJSONResult;
 import com.htf.service.CarouseService;
 import com.htf.service.CategoryService;
+import com.htf.utils.JsonUtils;
+import com.htf.utils.RedisOperator;
 import com.htf.vo.CategoryVO;
 import com.htf.vo.NewItemsVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,11 +35,24 @@ public class IndexController extends BaseController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisOperator redisOperator;
+
     @ApiOperation(value = "获取首页轮播图列表", notes = "获取首页轮播图列表", httpMethod = "GET")
     @GetMapping("/carousel")
     public ResponseJSONResult carousel(){
-        List<Carousel> carousels = carouseService.quertAll(IsShow.YES_SHOW.type);
-        return ResponseJSONResult.create(carousels);
+        List<Carousel> list = new ArrayList<>();
+
+        String carouselsStr = redisOperator.get("carousels");
+        if(StringUtils.isBlank(carouselsStr)){
+            list = carouseService.quertAll(IsShow.YES_SHOW.type);
+            redisOperator.set("carousels", JsonUtils.objectToJson(list));
+        }else{
+            carouselsStr = redisOperator.get("carousels");
+            list = JsonUtils.jsonToList(carouselsStr, Carousel.class);
+        }
+
+        return ResponseJSONResult.create(list);
     }
 
     /**
