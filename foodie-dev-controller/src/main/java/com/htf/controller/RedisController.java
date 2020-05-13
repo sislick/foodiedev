@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/redis")
 @Api(value = "redis相关的接口", tags = "redis相关的接口")
@@ -31,5 +34,13 @@ public class RedisController extends BaseController {
     public ResponseJSONResult get(String key){
         String value = (String)redisOperator.get(key);
         return ResponseJSONResult.create(value);
+    }
+
+    @GetMapping("/setSession")
+    public Object setSession(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("userInfo","new user");
+        session.setMaxInactiveInterval(3600);
+        return "ok";
     }
 }

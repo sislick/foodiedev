@@ -24,6 +24,8 @@ spring:
     host: 122.51.189.180
     port: 6379
     password: root
+#  session:
+#    store-type: redis
 ############################################################
 #
 # mybatis 配置
