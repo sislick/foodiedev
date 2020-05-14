@@ -32,10 +32,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:F:/imgs/");//映射本地静态资源
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getUserTokenInterceptor())
-                .addPathPatterns("/redis/**");
-        WebMvcConfigurer.super.addInterceptors(registry);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(getUserTokenInterceptor())
+//                .addPathPatterns("/redis/**");
+//        WebMvcConfigurer.super.addInterceptors(registry);
+//    }
 }

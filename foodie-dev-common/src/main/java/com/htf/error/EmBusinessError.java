@@ -32,7 +32,10 @@ public enum EmBusinessError implements CommonError {
     //5开头，订单相关
     ORDER_PAY_NOT_SUPPERT(50001,"支付方式不支持"),
     ORDER_FAIL(50002,"订单创建失败，原因：库存不足！"),
-    ORDER_ERROR(50003,"支付中心订单创建失败，请联系管理员")
+    ORDER_ERROR(50003,"支付中心订单创建失败，请联系管理员"),
+
+    //6临时票据验证
+    TMP_TICKET_ERROR(60001,"用户票据异常")
     ;
 
     //错误编码

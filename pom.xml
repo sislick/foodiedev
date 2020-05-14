@@ -13,6 +13,7 @@
       <module>foodie-dev-mapper</module>
       <module>foodie-dev-service</module>
       <module>foodie-dev-controller</module>
+      <module>foodie-sso</module>
     </modules>
 
     <parent>
@@ -167,12 +168,12 @@
       </exclusions>
     </dependency>
   <!--junit-->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>junit</groupId>-->
+      <!--<artifactId>junit</artifactId>-->
+      <!--<version>4.11</version>-->
+      <!--<scope>test</scope>-->
+    <!--</dependency>-->
 
     <!--spring-session依赖-->
     <dependency>
@@ -181,10 +182,10 @@
     </dependency>
 
     <!--spring安全框架依赖-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.springframework.boot</groupId>-->
+      <!--<artifactId>spring-boot-starter-security</artifactId>-->
+    <!--</dependency>-->
   </dependencies>
 
   <build>

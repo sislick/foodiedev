@@ -11,6 +11,11 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(value = "用户VO对象", description = "用于前后端交互的数据对象")
 public class UsersVO {
     /**
+     * 用户id
+     */
+    private String id;
+
+    /**
      * 用户名
      */
     @NotBlank(message = "用户名不能为空")
@@ -31,4 +36,9 @@ public class UsersVO {
     @NotBlank(message = "确认密码不能为空")
     @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "123123",required = false)
     private String confirmPassword;
+
+    /**
+     * 用户token
+     */
+    private String uniqueToken;
 }
