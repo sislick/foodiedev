@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author huotengfei
+ */
 @RestController
 @RequestMapping("index")
 @Api(value = "首页", tags = {"首页展示的相关接口"})

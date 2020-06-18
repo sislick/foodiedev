@@ -108,7 +108,6 @@ public class ItemServiceImpl implements ItemService {
         if(level != null){
             itemsComments.setCommentLevel(level);
         }
-
         return itemsCommentsMapper.selectCount(itemsComments);
     }
 

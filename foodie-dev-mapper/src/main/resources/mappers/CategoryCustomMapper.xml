@@ -80,5 +80,4 @@
     order by i.created_time desc
     limit 0,6
   </select>
-
 </mapper>

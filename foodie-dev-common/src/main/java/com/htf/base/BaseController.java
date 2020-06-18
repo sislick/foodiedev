@@ -16,7 +16,7 @@ import java.util.Map;
  * 业务异常处理的controller
  */
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class BaseController {
 
     //微信支付成功-》支付中心-》天天吃货平台
